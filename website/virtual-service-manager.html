@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Service Delivery Manager | KHITServices</title>
+  <meta name="description" content="Virtual Service Delivery Manager — full ongoing technology service management for growing UK businesses. Day-rate engagement at £500/day, scoped after a Service Review.">
+  <link rel="icon" href="khithash.png" type="image/png">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:#061a36; --bg2:#0c2244; --bg3:#102a50;
+  --card:#122b50; --card-hover:#193462;
+  --orange:#e8561a; --orange-light:rgba(232,86,26,0.12); --orange-glow:rgba(232,86,26,0.25);
+  --text:#e8edf2; --text2:#8a9bb0; --text3:#526070;
+  --border:rgba(232,86,26,0.14); --border2:rgba(255,255,255,0.06);
+  --white:#fff; --green:#2dba72;
+  --radius:10px; --radius-lg:18px;
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans','Segoe UI',system-ui,sans-serif;
+  --max:1080px; --transition:0.22s ease;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--font-body); background:var(--bg); color:var(--text); line-height:1.7; font-size:16px; -webkit-font-smoothing:antialiased; }
+img { max-width:100%; display:block; }
+a { color:var(--orange); text-decoration:none; transition:color var(--transition); }
+a:hover { color:#ff7a40; }
+
+h1,h2,h3,h4 { font-family:var(--font-display); font-weight:700; line-height:1.2; color:var(--white); }
+h1 { font-size:clamp(2.2rem,5vw,3.4rem); }
+h2 { font-size:clamp(1.7rem,3.5vw,2.4rem); }
+h3 { font-size:clamp(1.15rem,2vw,1.45rem); }
+p { color:var(--text2); line-height:1.75; }
+
+.container { max-width:var(--max); margin:0 auto; padding:0 24px; }
+.section { padding:90px 0; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+
+/* Nav */
+.site-nav { position:sticky; top:0; z-index:100; background:rgba(7,12,20,0.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border2); }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; max-width:var(--max); margin:0 auto; padding:0 24px; height:68px; }
+.nav-logo { display:flex; align-items:center; gap:10px; min-width:180px; }
+.nav-logo img { height:36px; width:auto; }
+.nav-links { display:flex; align-items:center; gap:0.25rem; list-style:none; }
+.nav-links a { font-size:0.875rem; font-weight:500; color:var(--text2); padding:8px 14px; border-radius:var(--radius); transition:all var(--transition); white-space:nowrap; }
+.nav-links a:hover, .nav-links a.active { color:var(--white); background:var(--orange-light); }
+.nav-links .nav-cta a { background:var(--orange); color:var(--white)!important; padding:8px 18px; border-radius:var(--radius); }
+.nav-links .nav-cta a:hover { background:#d44d17; }
+.nav-divider { width:1px; height:20px; background:var(--border2); margin:0 6px; }
+.nav-secondary a { font-size:0.8rem; color:var(--text3); }
+.nav-secondary a:hover { color:var(--text2); background:transparent; }
+.nav-hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; color:var(--text); }
+.mobile-menu { display:none; flex-direction:column; background:var(--bg2); border-top:1px solid var(--border2); padding:16px 24px; gap:4px; }
+.mobile-menu a { display:block; padding:10px 12px; border-radius:var(--radius); color:var(--text2); font-weight:500; }
+.mobile-menu a:hover { color:var(--white); background:var(--orange-light); }
+.mobile-menu .mobile-cta { background:var(--orange); color:var(--white); text-align:center; margin-top:8px; }
+.mobile-menu.open { display:flex; }
+
+/* Buttons */
+.btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:0.95rem; font-weight:600; padding:13px 28px; border-radius:var(--radius); border:none; cursor:pointer; transition:all var(--transition); text-decoration:none; white-space:nowrap; }
+.btn-primary { background:var(--orange); color:var(--white); }
+.btn-primary:hover { background:#d44d17; transform:translateY(-1px); box-shadow:0 6px 20px var(--orange-glow); }
+.btn-secondary { background:transparent; color:var(--text); border:1px solid var(--border2); }
+.btn-secondary:hover { border-color:var(--orange); color:var(--orange); background:var(--orange-light); }
+.btn-lg { padding:16px 36px; font-size:1.05rem; }
+
+/* Hero */
+.hero { padding:110px 0 90px; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle,rgba(232,86,26,0.08) 0%,transparent 70%); pointer-events:none; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--orange); background:var(--orange-light); padding:6px 14px; border-radius:50px; margin-bottom:1.5rem; }
+.hero-title { margin-bottom:1.5rem; }
+.hero-title em { font-style:normal; color:var(--orange); }
+.hero-subtitle { font-size:1.15rem; color:var(--text2); max-width:580px; margin-bottom:2rem; }
+.hero-price-anchor { display:inline-flex; align-items:baseline; gap:0.5rem; background:var(--card); border:1px solid var(--border2); border-radius:var(--radius); padding:10px 18px; margin-bottom:2rem; font-size:0.9rem; color:var(--text2); }
+.hero-price-anchor strong { font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--white); }
+.hero-actions { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; }
+.hero-note { font-size:0.8rem; color:var(--text3); margin-top:1rem; max-width:580px; }
+
+/* Eligibility callout */
+.eligibility-callout { background:var(--bg3); border:1px solid var(--border2); border-left:3px solid var(--orange); border-radius:0 var(--radius-lg) var(--radius-lg) 0; padding:1.5rem 1.75rem; margin-bottom:2.5rem; display:grid; grid-template-columns:40px 1fr; gap:1.25rem; align-items:start; }
+.eligibility-callout .icon { width:36px; height:36px; background:var(--orange-light); color:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.eligibility-callout h3 { font-family:var(--font-body); font-size:0.95rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text); margin-bottom:0.5rem; }
+.eligibility-callout p { font-size:0.95rem; margin-bottom:0.5rem; }
+.eligibility-callout p:last-child { margin-bottom:0; }
+.eligibility-callout strong { color:var(--white); }
+
+/* Section labels */
+.section-label { display:inline-flex; align-items:center; gap:8px; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:var(--orange); margin-bottom:1rem; }
+.section-label::before { content:''; display:block; width:24px; height:2px; background:var(--orange); }
+.section-title { margin-bottom:1rem; }
+.section-intro { font-size:1.1rem; color:var(--text2); max-width:640px; margin-bottom:3rem; }
+
+/* Cards */
+.card { background:var(--card); border:1px solid var(--border2); border-radius:var(--radius-lg); padding:2rem; transition:all var(--transition); }
+.card:hover { border-color:var(--border); transform:translateY(-2px); box-shadow:var(--shadow); }
+.card-icon { width:48px; height:48px; background:var(--orange-light); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem; color:var(--orange); }
+.card h3 { margin-bottom:0.75rem; }
+.card p { font-size:0.95rem; }
+
+/* Feature list */
+.feature-list { list-style:none; display:flex; flex-direction:column; gap:0.75rem; }
+.feature-list li { display:flex; align-items:flex-start; gap:10px; font-size:0.95rem; color:var(--text2); }
+.feature-list li::before { content:''; width:18px; height:18px; min-width:18px; background:var(--orange); mask:url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat; margin-top:3px; }
+
+/* Pricing card (day rate) */
+.day-rate-card {
+  background:linear-gradient(135deg,var(--card) 0%,#193462 100%);
+  border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:2.5rem;
+  display:grid; grid-template-columns:1.4fr 1fr; gap:2.5rem; align-items:center;
+}
+.day-rate-display { font-family:var(--font-display); font-size:3rem; font-weight:700; color:var(--white); line-height:1; margin-bottom:0.25rem; }
+.day-rate-display .small { font-size:1.1rem; color:var(--text3); font-weight:400; }
+.day-rate-unit { font-size:0.85rem; color:var(--text3); margin-bottom:1.25rem; }
+.day-rate-explainer p { font-size:0.95rem; color:var(--text); margin-bottom:0.75rem; }
+.day-rate-explainer p:last-child { margin-bottom:0; }
+
+.typical-engagement { background:var(--bg3); border:1px solid var(--border2); border-radius:var(--radius); padding:1.25rem; margin-top:1.25rem; }
+.typical-engagement h4 { font-family:var(--font-body); font-size:0.78rem; color:var(--orange); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem; }
+.typical-engagement p { font-size:0.9rem; color:var(--text2); margin:0; }
+
+/* Process flow */
+.process { display:flex; align-items:flex-start; gap:0; position:relative; }
+.process-step { flex:1; text-align:center; padding:0 1rem; position:relative; }
+.process-step::after { content:'→'; position:absolute; right:-12px; top:24px; color:var(--orange); font-size:1.2rem; }
+.process-step:last-child::after { display:none; }
+.process-num { width:52px; height:52px; background:var(--orange); color:var(--white); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; margin:0 auto 1rem; }
+.process-step h4 { font-family:var(--font-body); font-size:0.9rem; color:var(--white); margin-bottom:0.5rem; }
+.process-step p { font-size:0.85rem; }
+
+/* FAQ */
+.faq { display:flex; flex-direction:column; gap:1rem; }
+.faq-item { background:var(--card); border:1px solid var(--border2); border-radius:var(--radius-lg); overflow:hidden; }
+.faq-item summary { cursor:pointer; padding:1.25rem 1.5rem; font-size:1rem; font-weight:600; color:var(--white); list-style:none; display:flex; align-items:center; justify-content:space-between; transition:background var(--transition); }
+.faq-item summary::-webkit-details-marker { display:none; }
+.faq-item summary::after { content:'+'; font-size:1.4rem; color:var(--orange); font-weight:400; transition:transform var(--transition); }
+.faq-item[open] summary::after { transform:rotate(45deg); }
+.faq-item summary:hover { background:var(--card-hover); }
+.faq-item-body { padding:0 1.5rem 1.25rem; color:var(--text2); font-size:0.95rem; }
+.faq-item-body p { margin-bottom:0.75rem; }
+.faq-item-body p:last-child { margin-bottom:0; }
+
+/* Footer */
+.site-footer { background:var(--bg2); border-top:1px solid var(--border2); padding:56px 0 32px; }
+.footer-grid { display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:3rem; margin-bottom:3rem; }
+.footer-brand p { font-size:0.9rem; color:var(--text3); margin-top:1rem; line-height:1.7; }
+.footer-col h5 { font-family:var(--font-body); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--text3); margin-bottom:1rem; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.5rem; }
+.footer-col a { font-size:0.9rem; color:var(--text2); }
+.footer-col a:hover { color:var(--orange); }
+.footer-bottom { padding-top:1.5rem; border-top:1px solid var(--border2); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.footer-bottom p { font-size:0.8rem; color:var(--text3); }
+
+@media (max-width:900px) {
+  .grid-3 { grid-template-columns:1fr 1fr; }
+  .grid-4 { grid-template-columns:1fr 1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  .process { flex-wrap:wrap; }
+  .process-step { min-width:45%; }
+  .process-step::after { display:none; }
+  .day-rate-card { grid-template-columns:1fr; gap:1.5rem; padding:2rem; }
+  .eligibility-callout { grid-template-columns:1fr; }
+}
+@media (max-width:700px) {
+  .grid-2 { grid-template-columns:1fr; }
+  .grid-3 { grid-template-columns:1fr; }
+  .grid-4 { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; gap:2rem; }
+  .nav-links { display:none; }
+  .nav-hamburger { display:flex; }
+  .hero { padding:70px 0 56px; }
+  .section { padding:56px 0; }
+  .hero-actions { flex-direction:column; align-items:flex-start; }
+}
+  </style>
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.khitservices.co.uk/vsdm.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Virtual Service Delivery Manager | KHITServices">
+  <meta property="og:description" content="Full ongoing technology service management for growing UK businesses. £500/day, scoped after a Service Review.">
+  <meta property="og:url" content="https://www.khitservices.co.uk/vsdm.html">
+  <meta property="og:image" content="https://www.khitservices.co.uk/logo.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Virtual Service Delivery Manager",
+  "provider": {"@type":"Organization","name":"KHITServices","url":"https://www.khitservices.co.uk"},
+  "description": "Full ongoing technology service management for growing UK businesses. Day-rate engagement at £500/day, with scope agreed after a Service Review.",
+  "url": "https://www.khitservices.co.uk/vsdm.html",
+  "areaServed": "GB",
+  "audience": {"@type":"BusinessAudience","audienceType":"Growing UK SMBs"},
+  "offers": {
+    "@type": "Offer",
+    "price": "500",
+    "priceCurrency": "GBP",
+    "priceSpecification": {"@type":"UnitPriceSpecification","unitCode":"DAY","price":"500","priceCurrency":"GBP"},
+    "description": "£500 per day. Days per month agreed after Service Review."
+  }
+}
+  </script>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="KHITServices" style="height:45px;width:auto;display:block;"></a>
+    <ul class="nav-links">
+      <li><a href="briefing.html">Briefing</a></li>
+      <li><a href="review.html">Review</a></li>
+      <li><a href="project.html">Project</a></li>
+      <li><a href="ongoing.html" class="active">Ongoing</a></li>
+      <li><a href="toolkhit.html">ToolKHIT</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li class="nav-divider" role="separator"></li>
+      <li class="nav-secondary"><a href="professional-services.html">Professional Services</a></li>
+      <li class="nav-secondary"><a href="index.html#contact">Contact</a></li>
+      <li class="nav-cta"><a href="health-check.html">Start Health Check</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle" aria-label="Menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="briefing.html">Briefing</a>
+    <a href="review.html">Review</a>
+    <a href="project.html">Project</a>
+    <a href="ongoing.html" class="active">Ongoing</a>
+    <a href="toolkhit.html">ToolKHIT</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="professional-services.html">Professional Services</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="health-check.html" class="mobile-cta">Start Health Check</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Stage 5 · Virtual Service Delivery Manager
+    </div>
+    <h1 class="hero-title fade-up">Service management,<br><em>without the salary.</em></h1>
+    <p class="hero-subtitle fade-up fade-up-1">
+      A KHIT consultant in the role of your Service Delivery Manager — owning supplier relationships, running monthly reviews, holding governance, and steering improvement. Typically a day or two of consultant time spread across each month, not blocks of consecutive days.
+    </p>
+    <div class="hero-price-anchor fade-up fade-up-1">
+      <strong>£500</strong>
+      <span>per day · typically 1-2 days/month, spread across the month</span>
+    </div>
+    <div class="hero-actions fade-up fade-up-2">
+      <a href="health-check.html" class="btn btn-primary btn-lg">
+        Start your Health Check
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="chat.html" class="btn btn-secondary">Have a chat first</a>
+    </div>
+    <p class="hero-note fade-up fade-up-3">VSDM is a substantial engagement. We always run a Service Review first — so we know what we're managing before we manage it. The Health Check starts that path.</p>
+  </div>
+</section>
+
+<!-- Eligibility callout -->
+<div class="container" style="margin-top:-50px;">
+  <div class="eligibility-callout">
+    <div class="icon">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div>
+      <h3>VSDM is for growing businesses, post-Review</h3>
+      <p>VSDM works at the scale where you have multiple suppliers, real governance to hold across providers, and enough operational complexity that someone needs to be coordinating service end-to-end. For small teams, the lighter <a href="service-advisor.html"><strong>Service Advisor</strong></a> product fits better.</p>
+      <p>Your Health Check decides which path. <a href="health-check.html">Start there →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- What VSDM does -->
+<section class="section" style="background:var(--bg2); padding-top:60px;">
+  <div class="container">
+    <div class="section-label">What VSDM does</div>
+    <h2 class="section-title">The Service Delivery Manager role, day by day.</h2>
+    <p class="section-intro">In larger organisations, the Service Delivery Manager is the person who owns the operational quality of technology service — keeps suppliers honest, keeps governance current, keeps improvement moving. VSDM is that role, scaled and priced for businesses that don't need it full-time. Crucially, <strong style="color:var(--text);">VSDM works with the IT providers you already have, not as a replacement for them</strong> — we hold them accountable, surface what's missing, and drive the improvement agenda. The day-to-day technical work stays where it should: with your providers.</p>
+
+    <div class="grid-3" style="margin-top:2rem;">
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Supplier oversight</h3>
+        <p>Owns the working relationship with your technology suppliers. Holds them to their SLAs, escalates when needed, and runs the contractual reviews that usually slip.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Monthly service reviews</h3>
+        <p>Structured monthly meetings with you. What happened, what didn't, what's at risk, what to act on. With minutes you can show your board.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Governance oversight</h3>
+        <p>Watches how your providers handle incident, change, problem and risk — and tells you when something's slipping. We don't run the processes. We make sure they're being run properly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h3>Performance review</h3>
+        <p>Cuts through whatever your providers send you each month and tells you what it actually means. Trends that matter, risks hiding in the numbers, what the headline figures don't show.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Strategic input</h3>
+        <p>A senior voice in your technology decisions — renewals, new platforms, restructures, growth steps. We've seen the patterns before.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8V4M12 20v-4M4 12H0M24 12h-4"/><circle cx="12" cy="12" r="6"/></svg></div>
+        <h3>Improvement direction</h3>
+        <p>Your Service Improvement Plan becomes a live backlog, driven through your existing providers month by month. We hold the agenda. They do the technical doing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What it isn't -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">What VSDM isn't</div>
+    <h2 class="section-title">A senior part-time hire — not a replacement IT department.</h2>
+    <p class="section-intro">Honest scope-setting is part of why this works. Here's what VSDM doesn't try to be.</p>
+
+    <div class="grid-2" style="align-items:start;">
+      <div>
+        <ul class="feature-list" style="--orange: var(--text3);">
+          <li style="color:var(--text3);">Not a full-time hire — we work the days agreed, no more, no less</li>
+          <li style="color:var(--text3);">Not 24/7 incident response — that stays with your incumbent IT support</li>
+          <li style="color:var(--text3);">Not a hands-on technical role — we don't push patches or fix endpoints</li>
+          <li style="color:var(--text3);">Not a sales channel — we don't earn commission on supplier introductions</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="feature-list" style="--orange: var(--text3);">
+          <li style="color:var(--text3);">Not unlimited time between scheduled days — we work the agreed scope</li>
+          <li style="color:var(--text3);">Not a co-managed IT service — we manage <em>you</em>r providers, not become one</li>
+          <li style="color:var(--text3);">Not a path to a software resale — we don't have one</li>
+          <li style="color:var(--text3);">Not a contract trap — one calendar month notice, either side, always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section" style="background:var(--bg2);">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">A day rate, not a salary. Days, not headcount.</h2>
+    <p class="section-intro">£500 per day, typically 1-2 days per month — and those days flex across the month, not consecutive blocks. A half-day for the monthly service review, shorter touch-points for supplier calls and governance, email advisory between. The exact number of days is agreed after your Service Review.</p>
+
+    <div class="day-rate-card">
+      <div>
+        <div class="day-rate-display">£500<span class="small"> /day</span></div>
+        <div class="day-rate-unit">scoped monthly · UK-wide, remote-first</div>
+        <div class="typical-engagement">
+          <h4>How it lands in practice</h4>
+          <p>Most VSDM engagements run at <strong style="color:var(--white);">1 or 2 days per month</strong>. A "day" doesn't have to be a single block — typical patterns are a half-day for the monthly service review, plus shorter touch-points across the month for supplier calls, governance, and email exchanges. You don't have to free up a whole day in your calendar.</p>
+        </div>
+      </div>
+      <div class="day-rate-explainer">
+        <p><strong>Why a day rate?</strong> Service management work isn't uniform. Some weeks are quiet — a supplier reporting cycle, a few emails between calls. Others have a board meeting, a contract renewal, or a supplier issue that needs attention. A day-rate model lets that flex naturally within the agreed envelope — you pay for the work, not for blocks of calendar.</p>
+        <p><strong>Why scoped after Review?</strong> We'd rather see the operational shape of your service before we commit to a number of days. The Review gives both sides honest data to scope from.</p>
+        <p>Cancellation: rolling monthly engagement, one calendar month notice each side. Full terms in our <a href="cancellation.html" style="color:var(--orange); font-weight:600;">Cancellation Policy</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">From Health Check to monthly rhythm.</h2>
+    <p class="section-intro">The path is longer than Service Advisor — because the engagement is bigger. We don't shortcut this.</p>
+
+    <div class="process" style="margin-top:3rem;">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <h4>Health Check</h4>
+        <p>Free, ~10 minutes. Confirms you're growing-business tier.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <h4>Briefing</h4>
+        <p>60-min session + brief. Scopes whether VSDM is the right ongoing path.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <h4>Review</h4>
+        <p>Multi-module assessment. Establishes what VSDM should actually cover.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <h4>VSDM scope</h4>
+        <p>Days per month, remit, governance cadence — agreed in writing.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">5</div>
+        <h4>Engagement</h4>
+        <p>Monthly rhythm. Reviews with you, supplier oversight, governance assurance, improvement direction.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2.5rem; font-size:0.9rem; color:var(--text3); text-align:center;">VSDM is consultant-issued from your Review — there's no public booking link on this page.</p>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="section" style="background:var(--bg2);">
+  <div class="container">
+    <div class="section-label">Why KHITServices</div>
+    <h2 class="section-title">Enterprise experience. SMB pricing.</h2>
+    <p class="section-intro">Thirty years of running technology service for organisations that can't afford to get it wrong, applied to businesses that don't have a dedicated team.</p>
+    <div class="grid-4" style="margin-top:3rem;">
+      <div class="card"><div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Truly independent</h3><p>We don't sell products. We don't take supplier kickbacks. We manage what you already have and tell you the truth about it.</p></div>
+      <div class="card"><div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Enterprise experience</h3><p>Three decades of technology service management across financial services, public sector, transport and defence — applied at SMB scale.</p></div>
+      <div class="card"><div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>No jargon</h3><p>No acronyms, no overwhelm. Plain English recommendations — whether you're a small team or a growing business.</p></div>
+      <div class="card"><div class="card-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Yours to act on</h3><p>The Improvement Plan stays yours. We don't keep the keys.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS section to be added when we have 3+ real ones with consent -->
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div style="max-width:780px; margin:0 auto;">
+      <div class="section-label">Common questions</div>
+      <h2 class="section-title">VSDM FAQ</h2>
+      <p class="section-intro">If yours isn't here, <a href="chat.html" style="color:var(--orange);">book a 15-minute chat</a>.</p>
+
+      <div class="faq">
+        <details class="faq-item">
+          <summary>How is VSDM different from Service Advisor?</summary>
+          <div class="faq-item-body">
+            <p><strong>Service Advisor</strong> is light-touch — quarterly calls, annual refresh, email advisory. £45/mo or £499/yr. For small teams who want a sensible voice in the room.</p>
+            <p><strong>VSDM</strong> is full ongoing service management — supplier oversight, monthly reviews, governance, ongoing improvement. £500/day, scoped after a Review. For growing businesses with the operational complexity to need it.</p>
+            <p>Service Advisor is months of thinking time per year. VSDM is days of working time per month — different scale, different price.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why do I have to do a Review before VSDM?</summary>
+          <div class="faq-item-body">
+            <p>Because we'd be guessing without one. VSDM is a substantial commitment in both directions — you're paying real money, we're committing real consultant time. A Review surfaces what's actually in scope: how many suppliers, what governance you have, what's missing, what's broken. That tells both sides honestly how many days a month VSDM should run for.</p>
+            <p>Skipping the Review means the first three months become "discovery" anyway — and you'd pay day rate for it. The Review is a more efficient way to scope.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How many days a month is typical?</summary>
+          <div class="faq-item-body">
+            <p>Most engagements settle at <strong>1 or 2 days per month</strong>. A business that's just stabilising governance and managing a couple of suppliers might run at 1 day. A business with more suppliers, active improvement work, and regular board reporting might be at 2 days. More than that is unusual — it tends to signal a transition period (a major change, restructure, or implementation) and we'd flag that as such, not let it become the steady state.</p>
+            <p>Crucially, a "day" doesn't mean an 8-hour block we send a consultant for. Days flex across the month — most often a half-day for the monthly service review, plus shorter touch-points for supplier calls, governance work, and email exchanges between. You buy consultant time within an agreed envelope, not blocks of calendar.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are days reserved or used as needed?</summary>
+          <div class="faq-item-body">
+            <p>Both. We agree a target days/month at scope (say, 1 or 2 days). You're billed for days actually used, up to that target. Days not used in a given month don't roll forward indefinitely — but we won't bill you for time we haven't actually delivered.</p>
+            <p>If a particular month spikes (a supplier crisis, a big change), we'll flag and agree the additional days before they're worked. No surprise invoices.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do you replace our existing IT support?</summary>
+          <div class="faq-item-body">
+            <p>No. VSDM <em>manages</em> your IT support — and any other tech suppliers — but doesn't replace them. Day-to-day incident response, helpdesk, technical fixes, infrastructure work: that all stays with whoever does it for you today. We hold those providers to their commitments and surface where they're not delivering.</p>
+            <p>If part of the Review surfaces that one of your current providers needs replacing, we'll say so. We don't take the work ourselves — we'd help you find the right replacement.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What if our needs change month-to-month?</summary>
+          <div class="faq-item-body">
+            <p>Expected, and built in. The day rate model exists precisely because service management work isn't uniform. Quiet months you use fewer days. Busy months we agree extra. The agreed envelope flexes — what doesn't flex is the rate per day.</p>
+            <p>If your underlying needs change shape (a major restructure, a new platform, a regulatory shift), we'd revisit the scope formally rather than just churning days.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How long is the commitment?</summary>
+          <div class="faq-item-body">
+            <p>Rolling monthly. One calendar month notice each side. We don't do twelve-month minimums.</p>
+            <p>Practically, VSDM engagements typically run a year or longer because the value compounds — a new supplier rhythm, governance maturing, improvement landing. But you're never trapped. Full terms in our <a href="cancellation.html" style="color:var(--orange); font-weight:600;">Cancellation Policy</a>.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can VSDM run on-site or only remote?</summary>
+          <div class="faq-item-body">
+            <p>VSDM is remote-first — most service management work is meetings, review work, supplier conversations, governance documents, all of which don't need a physical visit. UK-wide.</p>
+            <p>If quarterly on-site visits add value (a board reporting day, a supplier review with the supplier present, an annual planning session), we'll arrange them. Travel time and expenses are agreed up front.</p>
+          </div>
+        </details>
+
+        <details class="faq-item" id="faq-recording">
+          <summary>Are VSDM meetings recorded?</summary>
+          <div class="faq-item-body">
+            <p>Yes — sessions with a KHIT consultant are recorded as part of the engagement record. The recording lets your consultant focus on the conversation rather than scribbling notes, gives us accurate action capture for follow-up, and protects both sides if a question comes up later about what was agreed.</p>
+            <p><strong>The detail:</strong></p>
+            <ul>
+              <li>Used internally for consultant notes and engagement follow-up only</li>
+              <li>Held only for the duration of your active engagement with KHITServices</li>
+              <li>Deleted when your engagement closes</li>
+              <li>Never shared externally without your explicit written consent</li>
+              <li>Subject to your full UK GDPR data rights — request a copy, request deletion, or ask us to stop recording at any point</li>
+            </ul>
+            <p>Your consultant will reaffirm the recording at the start of every session. If you'd rather not be recorded, tell us — we'll stop the recording (we may take more written notes during the session as a result). Cross-supplier review meetings where third-party providers attend are subject to the same disclosure — we'll let suppliers know in advance.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="section" style="background:var(--bg2);">
+  <div class="container">
+    <div style="max-width:680px; margin:0 auto; text-align:center;">
+      <div class="section-label" style="justify-content:center;">Ready when you are</div>
+      <h2 style="margin-bottom:1rem;">Service management, the right size for you.</h2>
+      <p style="margin-bottom:2.5rem;">Start with the Health Check. We'll work out whether VSDM is the right path — or whether something lighter fits better.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="health-check.html" class="btn btn-primary btn-lg">Start Health Check</a>
+        <a href="chat.html" class="btn btn-secondary">Book a 15-min chat</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:0;">
+          <div style="width:40px;height:40px;background:#e8561a;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="9" x2="20" y2="9" stroke="#061a36" stroke-width="2.5" stroke-linecap="square"/><line x1="4" y1="15" x2="20" y2="15" stroke="#061a36" stroke-width="2.5" stroke-linecap="square"/><line x1="9" y1="4" x2="7" y2="20" stroke="#061a36" stroke-width="2.5" stroke-linecap="square"/><line x1="17" y1="4" x2="15" y2="20" stroke="#061a36" stroke-width="2.5" stroke-linecap="square"/></svg>
+          </div>
+          <div style="font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:1.3rem;font-weight:700;color:#fff;">KHITServices</div>
+        </div>
+        <p>Independent technology service management for UK small and growing businesses. We help you see what's actually happening across your tech, then plan what to do about it.</p>
+      </div>
+      <div class="footer-col"><h5>The Five Stages</h5><ul><li><a href="health-check.html">Health Check</a></li><li><a href="briefing.html">Service Briefing</a></li><li><a href="review.html">Service Review</a></li><li><a href="project.html">Service Project</a></li><li><a href="ongoing.html">Ongoing</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="index.html#about">About Us</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="professional-services.html">Professional Services</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Legal</h5><ul><li><a href="cancellation.html">Cancellation &amp; Refunds</a></li><li><a href="mailto:info@khitservices.co.uk">Email Us</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KHITServices. All rights reserved.</p>
+      <p>UK-based technology service management consultancy</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var t=document.getElementById('navToggle'),m=document.getElementById('mobileMenu');if(t&&m)t.addEventListener('click',function(){m.classList.toggle('open');});})();
+</script>
+
+</body>
+</html>
